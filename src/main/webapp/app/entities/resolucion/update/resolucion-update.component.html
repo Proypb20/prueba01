@@ -6,7 +6,7 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="row mb-3" hidden>
           <label class="form-label" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
@@ -14,7 +14,7 @@
         <div class="row mb-3">
           <label class="form-label" for="field_resolucion">Resolucion</label>
           <input
-            type="number"
+            type="text"
             class="form-control"
             name="resolucion"
             id="field_resolucion"
@@ -23,9 +23,6 @@
           />
           <div *ngIf="editForm.get('resolucion')!.invalid && (editForm.get('resolucion')!.dirty || editForm.get('resolucion')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('resolucion')?.errors?.required"> Este campo es obligatorio. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('resolucion')?.errors?.number">
-              Este campo debe ser un número.
-            </small>
           </div>
         </div>
 
@@ -61,18 +58,6 @@
               Este campo no puede superar más de 10 caracteres.
             </small>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_resolucionb">Resolucionb</label>
-          <input
-            type="number"
-            class="form-control"
-            name="resolucionb"
-            id="field_resolucionb"
-            data-cy="resolucionb"
-            formControlName="resolucionb"
-          />
         </div>
       </div>
 

@@ -90,17 +90,14 @@ public class ResolucionQueryService extends QueryService<Resolucion> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Resolucion_.id));
             }
-            if (criteria.getResolucion() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getResolucion(), Resolucion_.resolucion));
-            }
             if (criteria.getFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFecha(), Resolucion_.fecha));
             }
             if (criteria.getExpediente() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getExpediente(), Resolucion_.expediente));
             }
-            if (criteria.getResolucionb() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getResolucionb(), Resolucion_.resolucionb));
+            if (criteria.getResolucion() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getResolucion(), Resolucion_.resolucion));
             }
         }
         return specification;

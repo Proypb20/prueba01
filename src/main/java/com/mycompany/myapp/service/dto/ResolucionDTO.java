@@ -13,15 +13,13 @@ public class ResolucionDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
-    private Integer resolucion;
-
     private LocalDate fecha;
 
     @Size(max = 10)
     private String expediente;
 
-    private Integer resolucionb;
+    @NotNull
+    private String resolucion;
 
     public Long getId() {
         return id;
@@ -29,14 +27,6 @@ public class ResolucionDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getResolucion() {
-        return resolucion;
-    }
-
-    public void setResolucion(Integer resolucion) {
-        this.resolucion = resolucion;
     }
 
     public LocalDate getFecha() {
@@ -55,12 +45,12 @@ public class ResolucionDTO implements Serializable {
         this.expediente = expediente;
     }
 
-    public Integer getResolucionb() {
-        return resolucionb;
+    public String getResolucion() {
+        return resolucion;
     }
 
-    public void setResolucionb(Integer resolucionb) {
-        this.resolucionb = resolucionb;
+    public void setResolucion(String resolucion) {
+        this.resolucion = resolucion;
     }
 
     @Override
@@ -89,10 +79,9 @@ public class ResolucionDTO implements Serializable {
     public String toString() {
         return "ResolucionDTO{" +
             "id=" + getId() +
-            ", resolucion=" + getResolucion() +
             ", fecha='" + getFecha() + "'" +
             ", expediente='" + getExpediente() + "'" +
-            ", resolucionb=" + getResolucionb() +
+            ", resolucion='" + getResolucion() + "'" +
             "}";
     }
 }

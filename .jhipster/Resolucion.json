@@ -3,11 +3,6 @@
   "dto": "mapstruct",
   "fields": [
     {
-      "fieldName": "resolucion",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required", "unique"]
-    },
-    {
       "fieldName": "fecha",
       "fieldType": "LocalDate"
     },
@@ -18,9 +13,9 @@
       "fieldValidateRulesMaxlength": "10"
     },
     {
-      "fieldName": "resolucionb",
-      "fieldType": "Integer",
-      "fieldValidateRules": []
+      "fieldName": "resolucion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
     }
   ],
   "jpaMetamodelFiltering": true,

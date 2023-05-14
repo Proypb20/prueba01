@@ -4,7 +4,9 @@
   </div>
 
   <div class="col-md-9">
-    <h1 class="display-4"><span>¡Bienvenido, Java Hipster!</span> (Prueba 01)</h1>
+    <h1 class="display-4">
+      <span>¡Bienvenido, {{ account!.lastName }}, {{ account!.firstName }}!</span>
+    </h1>
 
     <p class="lead">Esta es su página de inicio</p>
 

@@ -21,11 +21,11 @@ export class ResolucionComponent implements OnInit {
   predicate = 'id';
   ascending = true;
   // filtro
-  nroRes = 0;
+  nroRes = '';
   res: any;
 
   showFilter = false;
-  filterNroRes = 0;
+  filterNroRes = '';
 
   findForm = this.fb.group({
     resolucion: [null],
@@ -79,7 +79,7 @@ export class ResolucionComponent implements OnInit {
   showFilters(): void {
     if (this.showFilter) {
       this.showFilter = false;
-      this.filterNroRes = 0;
+      this.filterNroRes = '';
       this.loadFromBackendWithRouteInformations().subscribe({
         next: (res: EntityArrayResponseType) => {
           this.onResponseSuccess(res);
@@ -91,7 +91,7 @@ export class ResolucionComponent implements OnInit {
   }
 
   onChangeRes(): void {
-    this.nroRes = 0;
+    this.nroRes = '';
 
     if (this.findForm.get('resolucion')!.value! !== null) {
       this.nroRes = this.findForm.get('resolucion')!.value!;
@@ -132,12 +132,12 @@ export class ResolucionComponent implements OnInit {
 
   protected queryBackend(predicate?: string, ascending?: boolean): Observable<EntityArrayResponseType> {
     this.isLoading = true;
-    if (this.filterNroRes !== 0) {
+    if (this.filterNroRes !== '') {
       this.nroRes = this.filterNroRes;
     }
     const queryObject = {
       sort: this.getSortQueryParam(predicate, ascending),
-      'resolucion.equals': this.nroRes, // de filtro
+      'resolucion.contains': this.nroRes, // de filtro
     };
     return this.resolucionService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }

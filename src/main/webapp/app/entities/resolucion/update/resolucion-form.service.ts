@@ -18,10 +18,9 @@ type ResolucionFormDefaults = Pick<NewResolucion, 'id'>;
 
 type ResolucionFormGroupContent = {
   id: FormControl<IResolucion['id'] | NewResolucion['id']>;
-  resolucion: FormControl<IResolucion['resolucion']>;
   fecha: FormControl<IResolucion['fecha']>;
   expediente: FormControl<IResolucion['expediente']>;
-  resolucionb: FormControl<IResolucion['resolucionb']>;
+  resolucion: FormControl<IResolucion['resolucion']>;
 };
 
 export type ResolucionFormGroup = FormGroup<ResolucionFormGroupContent>;
@@ -41,14 +40,13 @@ export class ResolucionFormService {
           validators: [Validators.required],
         }
       ),
-      resolucion: new FormControl(resolucionRawValue.resolucion, {
-        validators: [Validators.required],
-      }),
       fecha: new FormControl(resolucionRawValue.fecha),
       expediente: new FormControl(resolucionRawValue.expediente, {
         validators: [Validators.maxLength(10)],
       }),
-      resolucionb: new FormControl(resolucionRawValue.resolucionb),
+      resolucion: new FormControl(resolucionRawValue.resolucion, {
+        validators: [Validators.required],
+      }),
     });
   }
 

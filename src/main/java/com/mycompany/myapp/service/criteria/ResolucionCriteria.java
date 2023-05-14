@@ -23,13 +23,11 @@ public class ResolucionCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private IntegerFilter resolucion;
-
     private LocalDateFilter fecha;
 
     private StringFilter expediente;
 
-    private IntegerFilter resolucionb;
+    private StringFilter resolucion;
 
     private Boolean distinct;
 
@@ -37,10 +35,9 @@ public class ResolucionCriteria implements Serializable, Criteria {
 
     public ResolucionCriteria(ResolucionCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
-        this.resolucion = other.resolucion == null ? null : other.resolucion.copy();
         this.fecha = other.fecha == null ? null : other.fecha.copy();
         this.expediente = other.expediente == null ? null : other.expediente.copy();
-        this.resolucionb = other.resolucionb == null ? null : other.resolucionb.copy();
+        this.resolucion = other.resolucion == null ? null : other.resolucion.copy();
         this.distinct = other.distinct;
     }
 
@@ -62,21 +59,6 @@ public class ResolucionCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
-    }
-
-    public IntegerFilter getResolucion() {
-        return resolucion;
-    }
-
-    public IntegerFilter resolucion() {
-        if (resolucion == null) {
-            resolucion = new IntegerFilter();
-        }
-        return resolucion;
-    }
-
-    public void setResolucion(IntegerFilter resolucion) {
-        this.resolucion = resolucion;
     }
 
     public LocalDateFilter getFecha() {
@@ -109,19 +91,19 @@ public class ResolucionCriteria implements Serializable, Criteria {
         this.expediente = expediente;
     }
 
-    public IntegerFilter getResolucionb() {
-        return resolucionb;
+    public StringFilter getResolucion() {
+        return resolucion;
     }
 
-    public IntegerFilter resolucionb() {
-        if (resolucionb == null) {
-            resolucionb = new IntegerFilter();
+    public StringFilter resolucion() {
+        if (resolucion == null) {
+            resolucion = new StringFilter();
         }
-        return resolucionb;
+        return resolucion;
     }
 
-    public void setResolucionb(IntegerFilter resolucionb) {
-        this.resolucionb = resolucionb;
+    public void setResolucion(StringFilter resolucion) {
+        this.resolucion = resolucion;
     }
 
     public Boolean getDistinct() {
@@ -143,17 +125,16 @@ public class ResolucionCriteria implements Serializable, Criteria {
         final ResolucionCriteria that = (ResolucionCriteria) o;
         return (
             Objects.equals(id, that.id) &&
-            Objects.equals(resolucion, that.resolucion) &&
             Objects.equals(fecha, that.fecha) &&
             Objects.equals(expediente, that.expediente) &&
-            Objects.equals(resolucionb, that.resolucionb) &&
+            Objects.equals(resolucion, that.resolucion) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, resolucion, fecha, expediente, resolucionb, distinct);
+        return Objects.hash(id, fecha, expediente, resolucion, distinct);
     }
 
     // prettier-ignore
@@ -161,10 +142,9 @@ public class ResolucionCriteria implements Serializable, Criteria {
     public String toString() {
         return "ResolucionCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
-            (resolucion != null ? "resolucion=" + resolucion + ", " : "") +
             (fecha != null ? "fecha=" + fecha + ", " : "") +
             (expediente != null ? "expediente=" + expediente + ", " : "") +
-            (resolucionb != null ? "resolucionb=" + resolucionb + ", " : "") +
+            (resolucion != null ? "resolucion=" + resolucion + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

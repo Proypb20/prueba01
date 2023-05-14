@@ -4,26 +4,25 @@ import { IResolucion, NewResolucion } from './resolucion.model';
 
 export const sampleWithRequiredData: IResolucion = {
   id: 55766,
-  resolucion: 8801,
+  resolucion: 'deposit',
 };
 
 export const sampleWithPartialData: IResolucion = {
-  id: 92408,
-  resolucion: 66233,
-  fecha: dayjs('2023-05-05'),
-  resolucionb: 4273,
+  id: 70015,
+  fecha: dayjs('2023-05-06'),
+  expediente: 'maximizada',
+  resolucion: 'synthesize neural Berkshire',
 };
 
 export const sampleWithFullData: IResolucion = {
-  id: 3850,
-  resolucion: 28854,
+  id: 47202,
   fecha: dayjs('2023-05-05'),
-  expediente: 'Consultor ',
-  resolucionb: 45646,
+  expediente: 'red',
+  resolucion: 'Bermuda Azul',
 };
 
 export const sampleWithNewData: NewResolucion = {
-  resolucion: 47202,
+  resolucion: 'Teclado',
   id: null,
 };
 

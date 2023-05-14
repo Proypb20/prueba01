@@ -1,11 +1,11 @@
-id;resolucion;fecha;expediente;resolucionb
-1;24960;2023-05-06;Sopa Fantá;91804
-2;4756;2023-05-05;Salchichas;27252
-3;23886;2023-05-05;SQL núcleo;88063
-4;68657;2023-05-06;harness;29183
-5;17949;2023-05-05;Genérico f;29965
-6;58407;2023-05-05;optical;81100
-7;43486;2023-05-05;contexto;70565
-8;90387;2023-05-06;Kip hackin;51494
-9;7111;2023-05-06;Fantástico;3290
-10;1076;2023-05-06;Metal;83614
+id;fecha;expediente;resolucion
+1;2023-05-06;panel;001
+2;2023-05-05;terciaria;002
+3;2023-05-05;Multi;003
+4;2023-05-05;Producto M;004
+5;2023-05-05;Joyería;005
+6;2023-05-05;contexto;006
+7;2023-05-05;connecting;007
+8;2023-05-05;generating;008
+9;2023-05-05;Borders Mu;009
+10;2023-05-06;Artesanal;010

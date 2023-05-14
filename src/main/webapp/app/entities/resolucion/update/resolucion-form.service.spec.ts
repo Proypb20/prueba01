@@ -20,10 +20,9 @@ describe('Resolucion Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            resolucion: expect.any(Object),
             fecha: expect.any(Object),
             expediente: expect.any(Object),
-            resolucionb: expect.any(Object),
+            resolucion: expect.any(Object),
           })
         );
       });
@@ -34,10 +33,9 @@ describe('Resolucion Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            resolucion: expect.any(Object),
             fecha: expect.any(Object),
             expediente: expect.any(Object),
-            resolucionb: expect.any(Object),
+            resolucion: expect.any(Object),
           })
         );
       });

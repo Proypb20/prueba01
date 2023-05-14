@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="ResolucionHeading">
-    <span>Resolucions</span>
+    <span>Resoluciones</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="showFilters()">
@@ -19,7 +19,7 @@
         [routerLink]="['/resolucion/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Crear nuevo Resolucion </span>
+        <span> Crear nueva Resolucion </span>
       </button>
     </div>
   </h2>
@@ -33,7 +33,7 @@
         <thead>
           <tr>
             <th scope="col">
-              <label class="form-label" for="field_resolucion">Id</label>
+              <label class="form-label" for="field_resolucion">Resolucion</label>
               <!--<select
             class="form-control"
             id="field_resolucion"
@@ -70,12 +70,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
+          <!--<th scope="col" jhiSortBy="id">
             <div class="d-flex">
               <span>ID</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th>-->
           <th scope="col" jhiSortBy="resolucion">
             <div class="d-flex">
               <span>Resolucion</span>
@@ -94,24 +94,17 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="resolucionb">
-            <div class="d-flex">
-              <span>Resolucionb</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let resolucion of resolucions; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!--<td>
             <a [routerLink]="['/resolucion', resolucion.id, 'view']">{{ resolucion.id }}</a>
-          </td>
+          </td>-->
           <td>{{ resolucion.resolucion }}</td>
           <td>{{ resolucion.fecha | formatMediumDate }}</td>
           <td>{{ resolucion.expediente }}</td>
-          <td>{{ resolucion.resolucionb }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

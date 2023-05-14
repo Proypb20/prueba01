@@ -34,10 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ResolucionResourceIT {
 
-    private static final Integer DEFAULT_RESOLUCION = 1;
-    private static final Integer UPDATED_RESOLUCION = 2;
-    private static final Integer SMALLER_RESOLUCION = 1 - 1;
-
     private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_FECHA = LocalDate.ofEpochDay(-1L);
@@ -45,9 +41,8 @@ class ResolucionResourceIT {
     private static final String DEFAULT_EXPEDIENTE = "AAAAAAAAAA";
     private static final String UPDATED_EXPEDIENTE = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_RESOLUCIONB = 1;
-    private static final Integer UPDATED_RESOLUCIONB = 2;
-    private static final Integer SMALLER_RESOLUCIONB = 1 - 1;
+    private static final String DEFAULT_RESOLUCION = "AAAAAAAAAA";
+    private static final String UPDATED_RESOLUCION = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/resolucions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -76,11 +71,7 @@ class ResolucionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resolucion createEntity(EntityManager em) {
-        Resolucion resolucion = new Resolucion()
-            .resolucion(DEFAULT_RESOLUCION)
-            .fecha(DEFAULT_FECHA)
-            .expediente(DEFAULT_EXPEDIENTE)
-            .resolucionb(DEFAULT_RESOLUCIONB);
+        Resolucion resolucion = new Resolucion().fecha(DEFAULT_FECHA).expediente(DEFAULT_EXPEDIENTE).resolucion(DEFAULT_RESOLUCION);
         return resolucion;
     }
 
@@ -91,11 +82,7 @@ class ResolucionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resolucion createUpdatedEntity(EntityManager em) {
-        Resolucion resolucion = new Resolucion()
-            .resolucion(UPDATED_RESOLUCION)
-            .fecha(UPDATED_FECHA)
-            .expediente(UPDATED_EXPEDIENTE)
-            .resolucionb(UPDATED_RESOLUCIONB);
+        Resolucion resolucion = new Resolucion().fecha(UPDATED_FECHA).expediente(UPDATED_EXPEDIENTE).resolucion(UPDATED_RESOLUCION);
         return resolucion;
     }
 
@@ -118,10 +105,9 @@ class ResolucionResourceIT {
         List<Resolucion> resolucionList = resolucionRepository.findAll();
         assertThat(resolucionList).hasSize(databaseSizeBeforeCreate + 1);
         Resolucion testResolucion = resolucionList.get(resolucionList.size() - 1);
-        assertThat(testResolucion.getResolucion()).isEqualTo(DEFAULT_RESOLUCION);
         assertThat(testResolucion.getFecha()).isEqualTo(DEFAULT_FECHA);
         assertThat(testResolucion.getExpediente()).isEqualTo(DEFAULT_EXPEDIENTE);
-        assertThat(testResolucion.getResolucionb()).isEqualTo(DEFAULT_RESOLUCIONB);
+        assertThat(testResolucion.getResolucion()).isEqualTo(DEFAULT_RESOLUCION);
     }
 
     @Test
@@ -173,10 +159,9 @@ class ResolucionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(resolucion.getId().intValue())))
-            .andExpect(jsonPath("$.[*].resolucion").value(hasItem(DEFAULT_RESOLUCION)))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].expediente").value(hasItem(DEFAULT_EXPEDIENTE)))
-            .andExpect(jsonPath("$.[*].resolucionb").value(hasItem(DEFAULT_RESOLUCIONB)));
+            .andExpect(jsonPath("$.[*].resolucion").value(hasItem(DEFAULT_RESOLUCION)));
     }
 
     @Test
@@ -191,10 +176,9 @@ class ResolucionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(resolucion.getId().intValue()))
-            .andExpect(jsonPath("$.resolucion").value(DEFAULT_RESOLUCION))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.expediente").value(DEFAULT_EXPEDIENTE))
-            .andExpect(jsonPath("$.resolucionb").value(DEFAULT_RESOLUCIONB));
+            .andExpect(jsonPath("$.resolucion").value(DEFAULT_RESOLUCION));
     }
 
     @Test
@@ -213,97 +197,6 @@ class ResolucionResourceIT {
 
         defaultResolucionShouldBeFound("id.lessThanOrEqual=" + id);
         defaultResolucionShouldNotBeFound("id.lessThan=" + id);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionIsEqualToSomething() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucion equals to DEFAULT_RESOLUCION
-        defaultResolucionShouldBeFound("resolucion.equals=" + DEFAULT_RESOLUCION);
-
-        // Get all the resolucionList where resolucion equals to UPDATED_RESOLUCION
-        defaultResolucionShouldNotBeFound("resolucion.equals=" + UPDATED_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionIsInShouldWork() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucion in DEFAULT_RESOLUCION or UPDATED_RESOLUCION
-        defaultResolucionShouldBeFound("resolucion.in=" + DEFAULT_RESOLUCION + "," + UPDATED_RESOLUCION);
-
-        // Get all the resolucionList where resolucion equals to UPDATED_RESOLUCION
-        defaultResolucionShouldNotBeFound("resolucion.in=" + UPDATED_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucion is not null
-        defaultResolucionShouldBeFound("resolucion.specified=true");
-
-        // Get all the resolucionList where resolucion is null
-        defaultResolucionShouldNotBeFound("resolucion.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucion is greater than or equal to DEFAULT_RESOLUCION
-        defaultResolucionShouldBeFound("resolucion.greaterThanOrEqual=" + DEFAULT_RESOLUCION);
-
-        // Get all the resolucionList where resolucion is greater than or equal to UPDATED_RESOLUCION
-        defaultResolucionShouldNotBeFound("resolucion.greaterThanOrEqual=" + UPDATED_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucion is less than or equal to DEFAULT_RESOLUCION
-        defaultResolucionShouldBeFound("resolucion.lessThanOrEqual=" + DEFAULT_RESOLUCION);
-
-        // Get all the resolucionList where resolucion is less than or equal to SMALLER_RESOLUCION
-        defaultResolucionShouldNotBeFound("resolucion.lessThanOrEqual=" + SMALLER_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionIsLessThanSomething() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucion is less than DEFAULT_RESOLUCION
-        defaultResolucionShouldNotBeFound("resolucion.lessThan=" + DEFAULT_RESOLUCION);
-
-        // Get all the resolucionList where resolucion is less than UPDATED_RESOLUCION
-        defaultResolucionShouldBeFound("resolucion.lessThan=" + UPDATED_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucion is greater than DEFAULT_RESOLUCION
-        defaultResolucionShouldNotBeFound("resolucion.greaterThan=" + DEFAULT_RESOLUCION);
-
-        // Get all the resolucionList where resolucion is greater than SMALLER_RESOLUCION
-        defaultResolucionShouldBeFound("resolucion.greaterThan=" + SMALLER_RESOLUCION);
     }
 
     @Test
@@ -464,93 +357,67 @@ class ResolucionResourceIT {
 
     @Test
     @Transactional
-    void getAllResolucionsByResolucionbIsEqualToSomething() throws Exception {
+    void getAllResolucionsByResolucionIsEqualToSomething() throws Exception {
         // Initialize the database
         resolucionRepository.saveAndFlush(resolucion);
 
-        // Get all the resolucionList where resolucionb equals to DEFAULT_RESOLUCIONB
-        defaultResolucionShouldBeFound("resolucionb.equals=" + DEFAULT_RESOLUCIONB);
+        // Get all the resolucionList where resolucion equals to DEFAULT_RESOLUCION
+        defaultResolucionShouldBeFound("resolucion.equals=" + DEFAULT_RESOLUCION);
 
-        // Get all the resolucionList where resolucionb equals to UPDATED_RESOLUCIONB
-        defaultResolucionShouldNotBeFound("resolucionb.equals=" + UPDATED_RESOLUCIONB);
+        // Get all the resolucionList where resolucion equals to UPDATED_RESOLUCION
+        defaultResolucionShouldNotBeFound("resolucion.equals=" + UPDATED_RESOLUCION);
     }
 
     @Test
     @Transactional
-    void getAllResolucionsByResolucionbIsInShouldWork() throws Exception {
+    void getAllResolucionsByResolucionIsInShouldWork() throws Exception {
         // Initialize the database
         resolucionRepository.saveAndFlush(resolucion);
 
-        // Get all the resolucionList where resolucionb in DEFAULT_RESOLUCIONB or UPDATED_RESOLUCIONB
-        defaultResolucionShouldBeFound("resolucionb.in=" + DEFAULT_RESOLUCIONB + "," + UPDATED_RESOLUCIONB);
+        // Get all the resolucionList where resolucion in DEFAULT_RESOLUCION or UPDATED_RESOLUCION
+        defaultResolucionShouldBeFound("resolucion.in=" + DEFAULT_RESOLUCION + "," + UPDATED_RESOLUCION);
 
-        // Get all the resolucionList where resolucionb equals to UPDATED_RESOLUCIONB
-        defaultResolucionShouldNotBeFound("resolucionb.in=" + UPDATED_RESOLUCIONB);
+        // Get all the resolucionList where resolucion equals to UPDATED_RESOLUCION
+        defaultResolucionShouldNotBeFound("resolucion.in=" + UPDATED_RESOLUCION);
     }
 
     @Test
     @Transactional
-    void getAllResolucionsByResolucionbIsNullOrNotNull() throws Exception {
+    void getAllResolucionsByResolucionIsNullOrNotNull() throws Exception {
         // Initialize the database
         resolucionRepository.saveAndFlush(resolucion);
 
-        // Get all the resolucionList where resolucionb is not null
-        defaultResolucionShouldBeFound("resolucionb.specified=true");
+        // Get all the resolucionList where resolucion is not null
+        defaultResolucionShouldBeFound("resolucion.specified=true");
 
-        // Get all the resolucionList where resolucionb is null
-        defaultResolucionShouldNotBeFound("resolucionb.specified=false");
+        // Get all the resolucionList where resolucion is null
+        defaultResolucionShouldNotBeFound("resolucion.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllResolucionsByResolucionbIsGreaterThanOrEqualToSomething() throws Exception {
+    void getAllResolucionsByResolucionContainsSomething() throws Exception {
         // Initialize the database
         resolucionRepository.saveAndFlush(resolucion);
 
-        // Get all the resolucionList where resolucionb is greater than or equal to DEFAULT_RESOLUCIONB
-        defaultResolucionShouldBeFound("resolucionb.greaterThanOrEqual=" + DEFAULT_RESOLUCIONB);
+        // Get all the resolucionList where resolucion contains DEFAULT_RESOLUCION
+        defaultResolucionShouldBeFound("resolucion.contains=" + DEFAULT_RESOLUCION);
 
-        // Get all the resolucionList where resolucionb is greater than or equal to UPDATED_RESOLUCIONB
-        defaultResolucionShouldNotBeFound("resolucionb.greaterThanOrEqual=" + UPDATED_RESOLUCIONB);
+        // Get all the resolucionList where resolucion contains UPDATED_RESOLUCION
+        defaultResolucionShouldNotBeFound("resolucion.contains=" + UPDATED_RESOLUCION);
     }
 
     @Test
     @Transactional
-    void getAllResolucionsByResolucionbIsLessThanOrEqualToSomething() throws Exception {
+    void getAllResolucionsByResolucionNotContainsSomething() throws Exception {
         // Initialize the database
         resolucionRepository.saveAndFlush(resolucion);
 
-        // Get all the resolucionList where resolucionb is less than or equal to DEFAULT_RESOLUCIONB
-        defaultResolucionShouldBeFound("resolucionb.lessThanOrEqual=" + DEFAULT_RESOLUCIONB);
+        // Get all the resolucionList where resolucion does not contain DEFAULT_RESOLUCION
+        defaultResolucionShouldNotBeFound("resolucion.doesNotContain=" + DEFAULT_RESOLUCION);
 
-        // Get all the resolucionList where resolucionb is less than or equal to SMALLER_RESOLUCIONB
-        defaultResolucionShouldNotBeFound("resolucionb.lessThanOrEqual=" + SMALLER_RESOLUCIONB);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionbIsLessThanSomething() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucionb is less than DEFAULT_RESOLUCIONB
-        defaultResolucionShouldNotBeFound("resolucionb.lessThan=" + DEFAULT_RESOLUCIONB);
-
-        // Get all the resolucionList where resolucionb is less than UPDATED_RESOLUCIONB
-        defaultResolucionShouldBeFound("resolucionb.lessThan=" + UPDATED_RESOLUCIONB);
-    }
-
-    @Test
-    @Transactional
-    void getAllResolucionsByResolucionbIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        resolucionRepository.saveAndFlush(resolucion);
-
-        // Get all the resolucionList where resolucionb is greater than DEFAULT_RESOLUCIONB
-        defaultResolucionShouldNotBeFound("resolucionb.greaterThan=" + DEFAULT_RESOLUCIONB);
-
-        // Get all the resolucionList where resolucionb is greater than SMALLER_RESOLUCIONB
-        defaultResolucionShouldBeFound("resolucionb.greaterThan=" + SMALLER_RESOLUCIONB);
+        // Get all the resolucionList where resolucion does not contain UPDATED_RESOLUCION
+        defaultResolucionShouldBeFound("resolucion.doesNotContain=" + UPDATED_RESOLUCION);
     }
 
     /**
@@ -562,10 +429,9 @@ class ResolucionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(resolucion.getId().intValue())))
-            .andExpect(jsonPath("$.[*].resolucion").value(hasItem(DEFAULT_RESOLUCION)))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].expediente").value(hasItem(DEFAULT_EXPEDIENTE)))
-            .andExpect(jsonPath("$.[*].resolucionb").value(hasItem(DEFAULT_RESOLUCIONB)));
+            .andExpect(jsonPath("$.[*].resolucion").value(hasItem(DEFAULT_RESOLUCION)));
 
         // Check, that the count call also returns 1
         restResolucionMockMvc
@@ -613,11 +479,7 @@ class ResolucionResourceIT {
         Resolucion updatedResolucion = resolucionRepository.findById(resolucion.getId()).get();
         // Disconnect from session so that the updates on updatedResolucion are not directly saved in db
         em.detach(updatedResolucion);
-        updatedResolucion
-            .resolucion(UPDATED_RESOLUCION)
-            .fecha(UPDATED_FECHA)
-            .expediente(UPDATED_EXPEDIENTE)
-            .resolucionb(UPDATED_RESOLUCIONB);
+        updatedResolucion.fecha(UPDATED_FECHA).expediente(UPDATED_EXPEDIENTE).resolucion(UPDATED_RESOLUCION);
         ResolucionDTO resolucionDTO = resolucionMapper.toDto(updatedResolucion);
 
         restResolucionMockMvc
@@ -632,10 +494,9 @@ class ResolucionResourceIT {
         List<Resolucion> resolucionList = resolucionRepository.findAll();
         assertThat(resolucionList).hasSize(databaseSizeBeforeUpdate);
         Resolucion testResolucion = resolucionList.get(resolucionList.size() - 1);
-        assertThat(testResolucion.getResolucion()).isEqualTo(UPDATED_RESOLUCION);
         assertThat(testResolucion.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testResolucion.getExpediente()).isEqualTo(UPDATED_EXPEDIENTE);
-        assertThat(testResolucion.getResolucionb()).isEqualTo(UPDATED_RESOLUCIONB);
+        assertThat(testResolucion.getResolucion()).isEqualTo(UPDATED_RESOLUCION);
     }
 
     @Test
@@ -727,10 +588,9 @@ class ResolucionResourceIT {
         List<Resolucion> resolucionList = resolucionRepository.findAll();
         assertThat(resolucionList).hasSize(databaseSizeBeforeUpdate);
         Resolucion testResolucion = resolucionList.get(resolucionList.size() - 1);
-        assertThat(testResolucion.getResolucion()).isEqualTo(DEFAULT_RESOLUCION);
         assertThat(testResolucion.getFecha()).isEqualTo(DEFAULT_FECHA);
         assertThat(testResolucion.getExpediente()).isEqualTo(DEFAULT_EXPEDIENTE);
-        assertThat(testResolucion.getResolucionb()).isEqualTo(DEFAULT_RESOLUCIONB);
+        assertThat(testResolucion.getResolucion()).isEqualTo(DEFAULT_RESOLUCION);
     }
 
     @Test
@@ -745,11 +605,7 @@ class ResolucionResourceIT {
         Resolucion partialUpdatedResolucion = new Resolucion();
         partialUpdatedResolucion.setId(resolucion.getId());
 
-        partialUpdatedResolucion
-            .resolucion(UPDATED_RESOLUCION)
-            .fecha(UPDATED_FECHA)
-            .expediente(UPDATED_EXPEDIENTE)
-            .resolucionb(UPDATED_RESOLUCIONB);
+        partialUpdatedResolucion.fecha(UPDATED_FECHA).expediente(UPDATED_EXPEDIENTE).resolucion(UPDATED_RESOLUCION);
 
         restResolucionMockMvc
             .perform(
@@ -763,10 +619,9 @@ class ResolucionResourceIT {
         List<Resolucion> resolucionList = resolucionRepository.findAll();
         assertThat(resolucionList).hasSize(databaseSizeBeforeUpdate);
         Resolucion testResolucion = resolucionList.get(resolucionList.size() - 1);
-        assertThat(testResolucion.getResolucion()).isEqualTo(UPDATED_RESOLUCION);
         assertThat(testResolucion.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testResolucion.getExpediente()).isEqualTo(UPDATED_EXPEDIENTE);
-        assertThat(testResolucion.getResolucionb()).isEqualTo(UPDATED_RESOLUCIONB);
+        assertThat(testResolucion.getResolucion()).isEqualTo(UPDATED_RESOLUCION);
     }
 
     @Test

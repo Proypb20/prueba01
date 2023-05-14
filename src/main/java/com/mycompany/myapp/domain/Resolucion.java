@@ -20,10 +20,6 @@ public class Resolucion implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
-    @Column(name = "resolucion", nullable = false, unique = true)
-    private Integer resolucion;
-
     @Column(name = "fecha")
     private LocalDate fecha;
 
@@ -31,8 +27,9 @@ public class Resolucion implements Serializable {
     @Column(name = "expediente", length = 10)
     private String expediente;
 
-    @Column(name = "resolucionb")
-    private Integer resolucionb;
+    @NotNull
+    @Column(name = "resolucion", nullable = false, unique = true)
+    private String resolucion;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -47,19 +44,6 @@ public class Resolucion implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getResolucion() {
-        return this.resolucion;
-    }
-
-    public Resolucion resolucion(Integer resolucion) {
-        this.setResolucion(resolucion);
-        return this;
-    }
-
-    public void setResolucion(Integer resolucion) {
-        this.resolucion = resolucion;
     }
 
     public LocalDate getFecha() {
@@ -88,17 +72,17 @@ public class Resolucion implements Serializable {
         this.expediente = expediente;
     }
 
-    public Integer getResolucionb() {
-        return this.resolucionb;
+    public String getResolucion() {
+        return this.resolucion;
     }
 
-    public Resolucion resolucionb(Integer resolucionb) {
-        this.setResolucionb(resolucionb);
+    public Resolucion resolucion(String resolucion) {
+        this.setResolucion(resolucion);
         return this;
     }
 
-    public void setResolucionb(Integer resolucionb) {
-        this.resolucionb = resolucionb;
+    public void setResolucion(String resolucion) {
+        this.resolucion = resolucion;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -125,10 +109,9 @@ public class Resolucion implements Serializable {
     public String toString() {
         return "Resolucion{" +
             "id=" + getId() +
-            ", resolucion=" + getResolucion() +
             ", fecha='" + getFecha() + "'" +
             ", expediente='" + getExpediente() + "'" +
-            ", resolucionb=" + getResolucionb() +
+            ", resolucion='" + getResolucion() + "'" +
             "}";
     }
 }
