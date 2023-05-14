@@ -1,0 +1,32 @@
+{
+  "changelogDate": "20230506063336",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "resolucion",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "fecha",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "expediente",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10"
+    },
+    {
+      "fieldName": "resolucionb",
+      "fieldType": "Integer",
+      "fieldValidateRules": []
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Resolucion",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

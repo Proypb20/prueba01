@@ -1,0 +1,147 @@
+<div>
+  <h2 id="page-heading" data-cy="ResolucionHeading">
+    <span>Resolucions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="showFilters()">
+        <fa-icon icon="filter"></fa-icon>
+        <span>Filtrar</span>
+      </button>
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-resolucion"
+        [routerLink]="['/resolucion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Crear nuevo Resolucion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+  <div class="table-responsive table-entities" id="entitiesFind" *ngIf="this.showFilter">
+    <form name="findForm" role="form" novalidate [formGroup]="findForm">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col">
+              <label class="form-label" for="field_resolucion">Id</label>
+              <!--<select
+            class="form-control"
+            id="field_resolucion"
+            data-cy="resolucion"
+            name="resolucion"
+            formControlName="resolucion"
+            (ngModelChange)="onChangeRes()"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="resolucionOption" *ngFor="let resolucionOption of resolucions">
+              {{ resolucionOption.resolucion }}
+            </option>
+          </select>-->
+              <input
+                type="number"
+                class="form-control"
+                name="resolucion"
+                id="field_resolucion"
+                data-cy="resolucion"
+                formControlName="resolucion"
+                (input)="onChangeRes()"
+              />
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </form>
+  </div>
+  <div class="alert alert-warning" id="no-result" *ngIf="resolucions?.length === 0">
+    <span>No hay resoluciones</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="resolucions && resolucions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="resolucion">
+            <div class="d-flex">
+              <span>Resolucion</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fecha">
+            <div class="d-flex">
+              <span>Fecha</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="expediente">
+            <div class="d-flex">
+              <span>Expediente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="resolucionb">
+            <div class="d-flex">
+              <span>Resolucionb</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resolucion of resolucions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/resolucion', resolucion.id, 'view']">{{ resolucion.id }}</a>
+          </td>
+          <td>{{ resolucion.resolucion }}</td>
+          <td>{{ resolucion.fecha | formatMediumDate }}</td>
+          <td>{{ resolucion.expediente }}</td>
+          <td>{{ resolucion.resolucionb }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/resolucion', resolucion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Vista</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/resolucion', resolucion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(resolucion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

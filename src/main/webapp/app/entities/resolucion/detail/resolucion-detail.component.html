@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resolucion">
+      <h2 data-cy="resolucionDetailsHeading"><span>Resolucion</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ resolucion.id }}</span>
+        </dd>
+        <dt><span>Resolucion</span></dt>
+        <dd>
+          <span>{{ resolucion.resolucion }}</span>
+        </dd>
+        <dt><span>Fecha</span></dt>
+        <dd>
+          <span>{{ resolucion.fecha | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Expediente</span></dt>
+        <dd>
+          <span>{{ resolucion.expediente }}</span>
+        </dd>
+        <dt><span>Resolucionb</span></dt>
+        <dd>
+          <span>{{ resolucion.resolucionb }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resolucion', resolucion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

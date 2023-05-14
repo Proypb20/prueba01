@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-resolucion-heading" data-cy="ResolucionCreateUpdateHeading">Crear o editar Resolucion</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_resolucion">Resolucion</label>
+          <input
+            type="number"
+            class="form-control"
+            name="resolucion"
+            id="field_resolucion"
+            data-cy="resolucion"
+            formControlName="resolucion"
+          />
+          <div *ngIf="editForm.get('resolucion')!.invalid && (editForm.get('resolucion')!.dirty || editForm.get('resolucion')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('resolucion')?.errors?.required"> Este campo es obligatorio. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('resolucion')?.errors?.number">
+              Este campo debe ser un número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_fecha">Fecha</label>
+          <div class="input-group">
+            <input
+              id="field_fecha"
+              data-cy="fecha"
+              type="text"
+              class="form-control"
+              name="fecha"
+              ngbDatepicker
+              #fechaDp="ngbDatepicker"
+              formControlName="fecha"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_expediente">Expediente</label>
+          <input
+            type="text"
+            class="form-control"
+            name="expediente"
+            id="field_expediente"
+            data-cy="expediente"
+            formControlName="expediente"
+          />
+          <div *ngIf="editForm.get('expediente')!.invalid && (editForm.get('expediente')!.dirty || editForm.get('expediente')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('expediente')?.errors?.maxlength">
+              Este campo no puede superar más de 10 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_resolucionb">Resolucionb</label>
+          <input
+            type="number"
+            class="form-control"
+            name="resolucionb"
+            id="field_resolucionb"
+            data-cy="resolucionb"
+            formControlName="resolucionb"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
