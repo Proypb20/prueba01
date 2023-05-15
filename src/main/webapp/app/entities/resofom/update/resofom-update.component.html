@@ -1,0 +1,89 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-resofom-heading" data-cy="ResofomCreateUpdateHeading">Crear o editar Resofom</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_limite_fc">Limite Fc</label>
+          <input type="number" class="form-control" name="limite_fc" id="field_limite_fc" data-cy="limite_fc" formControlName="limite_fc" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_limite_fom">Limite Fom</label>
+          <input
+            type="number"
+            class="form-control"
+            name="limite_fom"
+            id="field_limite_fom"
+            data-cy="limite_fom"
+            formControlName="limite_fom"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_resolucion">Resolucion</label>
+          <select
+            class="form-control"
+            id="field_resolucion"
+            data-cy="resolucion"
+            name="resolucion"
+            formControlName="resolucion"
+            [compareWith]="compareResolucion"
+          >
+            <option *ngIf="!editForm.get('resolucion')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="resolucionOption" *ngFor="let resolucionOption of resolucionsSharedCollection">
+              {{ resolucionOption.resolucion }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['resolucion'])!.invalid && (editForm.get(['resolucion'])!.dirty || editForm.get(['resolucion'])!.touched)"
+        >
+          <small class="form-text text-danger" *ngIf="editForm.get(['resolucion'])?.errors?.required"> Este campo es obligatorio. </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_gerdis">Gerdis</label>
+          <select
+            class="form-control"
+            id="field_gerdis"
+            data-cy="gerdis"
+            name="gerdis"
+            formControlName="gerdis"
+            [compareWith]="compareGerdis"
+          >
+            <option *ngIf="!editForm.get('gerdis')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="gerdisOption" *ngFor="let gerdisOption of gerdisSharedCollection">{{ gerdisOption.descripcion }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['gerdis'])!.invalid && (editForm.get(['gerdis'])!.dirty || editForm.get(['gerdis'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['gerdis'])?.errors?.required"> Este campo es obligatorio. </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

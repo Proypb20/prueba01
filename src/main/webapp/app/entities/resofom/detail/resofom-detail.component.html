@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resofom">
+      <h2 data-cy="resofomDetailsHeading"><span>Resofom</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ resofom.id }}</span>
+        </dd>
+        <dt><span>Limite Fc</span></dt>
+        <dd>
+          <span>{{ resofom.limite_fc }}</span>
+        </dd>
+        <dt><span>Limite Fom</span></dt>
+        <dd>
+          <span>{{ resofom.limite_fom }}</span>
+        </dd>
+        <dt><span>Resolucion</span></dt>
+        <dd>
+          <div *ngIf="resofom.resolucion">
+            <a [routerLink]="['/resolucion', resofom.resolucion.id, 'view']">{{ resofom.resolucion.resolucion }}</a>
+          </div>
+        </dd>
+        <dt><span>Gerdis</span></dt>
+        <dd>
+          <div *ngIf="resofom.gerdis">
+            <a [routerLink]="['/gerdis', resofom.gerdis.id, 'view']">{{ resofom.gerdis.descripcion }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resofom', resofom.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

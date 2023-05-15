@@ -1,0 +1,35 @@
+{
+  "changelogDate": "20230515212930",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "limite_fc",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "limite_fom",
+      "fieldType": "Double"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Resofom",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "resolucion",
+      "otherEntityName": "resolucion",
+      "relationshipName": "resolucion",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "descripcion",
+      "otherEntityName": "gerdis",
+      "relationshipName": "gerdis",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "service": "serviceClass"
+}

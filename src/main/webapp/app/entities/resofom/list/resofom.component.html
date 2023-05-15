@@ -1,0 +1,117 @@
+<div>
+  <h2 id="page-heading" data-cy="ResofomHeading">
+    <span>Resofoms</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-resofom"
+        [routerLink]="['/resofom/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Crear nuevo Resofom </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="resofoms?.length === 0">
+    <span>Ningún Resofoms encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="resofoms && resofoms.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="limite_fc">
+            <div class="d-flex">
+              <span>Limite Fc</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="limite_fom">
+            <div class="d-flex">
+              <span>Limite Fom</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="resolucion.resolucion">
+            <div class="d-flex">
+              <span>Resolucion</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="gerdis.descripcion">
+            <div class="d-flex">
+              <span>Gerdis</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resofom of resofoms; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/resofom', resofom.id, 'view']">{{ resofom.id }}</a>
+          </td>
+          <td>{{ resofom.limite_fc }}</td>
+          <td>{{ resofom.limite_fom }}</td>
+          <td>
+            <div *ngIf="resofom.resolucion">
+              <a [routerLink]="['/resolucion', resofom.resolucion.id, 'view']">{{ resofom.resolucion.resolucion }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="resofom.gerdis">
+              <a [routerLink]="['/gerdis', resofom.gerdis.id, 'view']">{{ resofom.gerdis.descripcion }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/resofom', resofom.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Vista</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/resofom', resofom.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(resofom)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
