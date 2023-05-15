@@ -3,6 +3,10 @@
     <span>Resofoms</span>
 
     <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="showFilters()">
+        <fa-icon icon="filter"></fa-icon>
+        <span>Filtrar</span>
+      </button>
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Refrescar lista</span>
@@ -23,6 +27,41 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
+
+  <div class="table-responsive table-entities" id="entitiesFind" *ngIf="this.showFilter">
+    <form name="findForm" role="form" novalidate [formGroup]="findForm">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col">
+              <label class="form-label" for="field_gerdis">Gerdis</label>
+              <select
+                class="form-control"
+                id="field_gerdis"
+                data-cy="gerdis"
+                name="gerdis"
+                formControlName="gerdis"
+                (ngModelChange)="onChangeGerdis()"
+              >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="gerdisOption" *ngFor="let gerdisOption of gerdis">
+                  {{ gerdisOption.descripcion }}
+                </option>
+              </select>
+              <!--<input
+              type="number"
+              class="form-control"
+              name="resolucion"
+              id="field_resolucion"
+              data-cy="resolucion"
+              formControlName="resolucion"
+            />-->
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </form>
+  </div>
 
   <div class="alert alert-warning" id="no-result" *ngIf="resofoms?.length === 0">
     <span>Ningún Resofoms encontrado</span>
